@@ -3,7 +3,7 @@ USE revoclix_db;
 CREATE TABLE IF NOT EXISTS translate
 (
     id INT PRIMARY KEY auto_increment,
-    key VARCHAR(64),
+    _key VARCHAR(64),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     remove_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP

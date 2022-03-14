@@ -7,7 +7,7 @@ import HttpException from "@utils/HttpException.utils";
 import errorMiddleware from "@middleware/errorMiddleware";
 
 //import user router
-import exampleRouter from "@routes/example.route";
+import authRouter from "@routes/auth.route";
 // ###
 // Init express
 const app = express();
@@ -20,7 +20,7 @@ app.use(cors());
 // Enable pre-flight
 app.options("*", cors());
 
-app.use("/", exampleRouter);
+app.use("/auth", authRouter);
 
 app.all("*", (req, res, next) => {
   const error = new HttpException(404, "Endpoint Not Found.");

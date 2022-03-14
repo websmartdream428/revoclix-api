@@ -1,6 +1,6 @@
 USE revoclix_db; 
 
-CREATE TABLE IF NOT EXISTS category
+CREATE TABLE IF NOT EXISTS category_lang
 (
     id_category INT(10),
     id_lang INT(10),
