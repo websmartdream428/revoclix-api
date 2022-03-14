@@ -1,0 +1,21 @@
+{
+  "typeAcquisition": {
+    "include": ["jquery"]
+  },
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "baseUrl": ".",
+    "paths": {
+      "@config/*": ["src/config/*"],
+      "@controller/*": ["src/controller/*"],
+      "@db/*": ["src/db/*"],
+      "@middleware/*": ["src/middleware/*"],
+      "@migration/*": ["src/migration/*"],
+      "@models/*": ["src/models/*"],
+      "@routes/*": ["src/routes/*"],
+      "@utils/*": ["src/utils/*"]
+    }
+  },
+  "exclude": ["node_modules", "**/node_modules/*"]
+}

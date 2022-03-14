@@ -1,0 +1,34 @@
+{
+  "name": "revoclix-api",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "npm run build && node ./build/app.js",
+    "dev": "nodemon --exec babel-node ./src/app.js",
+    "build": "babel -d ./build ./src/app.js -s"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/cli": "^7.17.3",
+    "@babel/core": "^7.17.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-validator": "^6.14.0",
+    "mysql-migrations": "^1.0.7",
+    "mysql2": "^2.3.3"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.17.0",
+    "@babel/node": "^7.16.8",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/runtime": "^7.17.2",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "eslint": "^8.9.0",
+    "nodemon": "^2.0.15"
+  }
+}
