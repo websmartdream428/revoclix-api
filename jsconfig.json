@@ -8,7 +8,7 @@
     "baseUrl": ".",
     "paths": {
       "@config/*": ["src/config/*"],
-      "@controller/*": ["src/controller/*"],
+      "@controllers/*": ["src/controllers/*"],
       "@db/*": ["src/db/*"],
       "@middleware/*": ["src/middleware/*"],
       "@migration/*": ["src/migration/*"],
