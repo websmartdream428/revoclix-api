@@ -8,9 +8,13 @@ import errorMiddleware from "@middleware/errorMiddleware";
 
 //import user router
 import authRouter from "@routes/auth.route";
+import categoryRouter from "@routes/category.route";
 // ###
 // Init express
 const app = express();
+
+const dotenv = require("dotenv");
+dotenv.config();
 // parse requests of content-type: application/json
 // parses incoming requests with JSON payloads
 app.use(express.json());
@@ -21,6 +25,7 @@ app.use(cors());
 app.options("*", cors());
 
 app.use("/auth", authRouter);
+app.use("/category", categoryRouter);
 
 app.all("*", (req, res, next) => {
   const error = new HttpException(404, "Endpoint Not Found.");

@@ -4,9 +4,6 @@ const AuthModel = require("@models/auth.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const dotenv = require("dotenv");
-dotenv.config();
-
 const adminLogin = async (req, res) => {
   const { email, password } = req.body;
   const admin = await AuthModel.checkAdmin({ email });
