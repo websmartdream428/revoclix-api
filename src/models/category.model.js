@@ -96,4 +96,52 @@ const removeCategory = async (id) => {
   }
 };
 
-module.exports = { addCategory, getAllCategory, removeCategory };
+const editCategory = async (params) => {
+  const {
+    id,
+    id_parent,
+    iconFamily,
+    icon,
+    backgroundColor,
+    color,
+    active,
+    level_depth,
+    id_lang,
+    name,
+    description,
+    url_rewriting,
+    meta_title,
+    meta_keywords,
+    meta_description,
+  } = params;
+  const sql = `UPDATE ${Tables.tb_category_lang} SET id_parent = ?, iconFamily = ?, icon = ?, backgroundColor = ?, color = ?, active = ?, level_depth = ? update_at = ? WHERE id = ${id}`;
+  const sql_lang = `UPDATE ${Tables.tb_category} SET id_lang = ?, name = ?, description = ?, url_rewriting = ?, meta_title = ?, meta_keywords = ?, meta_description = ? update_at = ? WHERE id_category = ${id}`;
+  try {
+    await DBConnection.query(sql, [
+      id_parent,
+      iconFamily,
+      icon,
+      backgroundColor,
+      color,
+      active,
+      level_depth,
+      Date.now(),
+    ]);
+    await DBConnection.query(sql_lang, [
+      id_lang,
+      name,
+      description,
+      url_rewriting,
+      meta_title,
+      meta_keywords,
+      meta_description,
+      Date.now(),
+    ]);
+    return { state: true };
+  } catch (error) {
+    console.log(error);
+    return { state: false };
+  }
+};
+
+module.exports = { addCategory, getAllCategory, editCategory, removeCategory };

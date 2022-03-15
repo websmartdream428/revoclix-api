@@ -20,6 +20,16 @@ const add = async (req, res) => {
   }
 };
 
+const edit = async (req, res) => {
+  const { body } = req;
+  const result = await CategoryModel.editCategory(body);
+  if (result) {
+    res.json({ success: true });
+  } else {
+    throw new HttpException(500, `Server Error!`);
+  }
+};
+
 const removeById = async (req, res) => {
   const { category_id } = req.body;
   const result = await CategoryModel.removeCategory(category_id);
@@ -33,5 +43,6 @@ const removeById = async (req, res) => {
 module.exports = {
   getAll,
   add,
+  edit,
   removeById,
 };
