@@ -1,8 +1,8 @@
 const HttpException = require("@utils/HttpException.utils");
-const CategoryModel = require("../models/category.model");
+const BrandModel = require("@models/brand.model");
 
 const getAll = async (req, res) => {
-  const result = await CategoryModel.getAllCategory();
+  const result = await BrandModel.getAllBrand();
   if (result.state) {
     res.json(result);
   } else {
@@ -12,7 +12,7 @@ const getAll = async (req, res) => {
 
 const add = async (req, res) => {
   const { body } = req;
-  const result = await CategoryModel.addCategory(body);
+  const result = await BrandModel.addBrand(body);
   if (result) {
     res.json({ success: true });
   } else {
@@ -22,7 +22,7 @@ const add = async (req, res) => {
 
 const edit = async (req, res) => {
   const { body } = req;
-  const result = await CategoryModel.editCategory(body);
+  const result = BrandModel.editBrand(body);
   if (result.state) {
     res.json({ success: true });
   } else {
@@ -31,8 +31,8 @@ const edit = async (req, res) => {
 };
 
 const removeById = async (req, res) => {
-  const { category_id } = req.body;
-  const result = await CategoryModel.removeCategory(category_id);
+  const { brand_id } = req.body;
+  const result = BrandModel.removeBrand(brand_id);
   if (result.state) {
     res.json({ success: true });
   } else {

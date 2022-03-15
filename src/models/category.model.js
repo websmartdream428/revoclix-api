@@ -1,6 +1,6 @@
 const DBConnection = require("@db/db-connection");
 const Tables = require("@config/tables");
-const { multipleColumnSet } = require("@utils/common.utils");
+// const { multipleColumnSet } = require("@utils/common.utils");
 
 const getAllCategory = async () => {
   const sql = `SELECT * from ${Tables.tb_category} as cate FULL OUTER JOIN ${Tables.tb_category_lang} as cate_lang ON cate.id = cate_lang.id_category`;
@@ -83,19 +83,6 @@ const addCategory = async (params) => {
   }
 };
 
-const removeCategory = async (id) => {
-  const sql = `DELETE FROM ${Tables.tb_category} WHERE id=${id};`;
-  const sql_lang = `DELETE FROM ${Tables.tb_category_lang} WHERE id_category=${id};`;
-  try {
-    await DBConnection.query(sql);
-    await DBConnection.query(sql_lang);
-    return { state: true };
-  } catch (error) {
-    console.log(error);
-    return { state: false };
-  }
-};
-
 const editCategory = async (params) => {
   const {
     id,
@@ -137,6 +124,19 @@ const editCategory = async (params) => {
       meta_description,
       Date.now(),
     ]);
+    return { state: true };
+  } catch (error) {
+    console.log(error);
+    return { state: false };
+  }
+};
+
+const removeCategory = async (id) => {
+  const sql = `DELETE FROM ${Tables.tb_category} WHERE id=${id};`;
+  const sql_lang = `DELETE FROM ${Tables.tb_category_lang} WHERE id_category=${id};`;
+  try {
+    await DBConnection.query(sql);
+    await DBConnection.query(sql_lang);
     return { state: true };
   } catch (error) {
     console.log(error);

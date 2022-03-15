@@ -4,9 +4,6 @@ import awaitHandlerFactory from "@middleware/awaitHandlerFactory.middleware";
 
 const router = Router();
 
-/**
- * @router Login
- */
 router.post("/adminlogin", awaitHandlerFactory(authController.adminLogin));
 
 export default router;
