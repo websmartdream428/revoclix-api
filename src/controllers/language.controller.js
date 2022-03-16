@@ -2,7 +2,7 @@ const HttpException = require("@utils/HttpException.utils");
 const LangModel = require("@models/language.model");
 
 const getAll = async (req, res) => {
-  const result = await LanguageModel.getAllLanguage();
+  const result = await LangModel.getAllLanguage();
   if (result.state) {
     res.json(result);
   } else {
@@ -12,7 +12,7 @@ const getAll = async (req, res) => {
 
 const add = async (req, res) => {
   const { body } = req;
-  const result = await LanguageModel.addLanguage(body);
+  const result = await LangModel.addLanguage(body);
   if (result) {
     res.json({ success: true });
   } else {
@@ -22,7 +22,7 @@ const add = async (req, res) => {
 
 const edit = async (req, res) => {
   const { body } = req;
-  const result = LanguageModel.editLanguage(body);
+  const result = LangModel.editLanguage(body);
   if (result.state) {
     res.json({ success: true });
   } else {
@@ -32,7 +32,7 @@ const edit = async (req, res) => {
 
 const removeById = async (req, res) => {
   const { language_id } = req.body;
-  const result = LanguageModel.removeLanguage(language_id);
+  const result = LangModel.removeLanguage(language_id);
   if (result.state) {
     res.json({ success: true });
   } else {
