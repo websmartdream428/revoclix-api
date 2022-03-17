@@ -2,7 +2,7 @@ const DBConnection = require("@db/db-connection");
 const Tables = require("@config/tables");
 
 const getAllBrand = async () => {
-  const sql = `SELECT * from ${Tables.tb_brands} as brands FULL OUTER JOIN ${Tables.tb_brands_lang} as brands_lang ON brands.id = brands_lang.id_brands`;
+  const sql = `SELECT * from ${Tables.tb_brands} as brands INNER JOIN ${Tables.tb_brands_lang} as brands_lang ON brands.id = brands_lang.id_brands`;
   try {
     const result = await DBConnection.query(sql);
     return { data: result, state: true };

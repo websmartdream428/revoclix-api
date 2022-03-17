@@ -3,7 +3,7 @@ const Tables = require("@config/tables");
 // const { multipleColumnSet } = require("@utils/common.utils");
 
 const getAllCategory = async () => {
-  const sql = `SELECT * from ${Tables.tb_category} as cate FULL OUTER JOIN ${Tables.tb_category_lang} as cate_lang ON cate.id = cate_lang.id_category`;
+  const sql = `SELECT * FROM ${Tables.tb_category} as cate INNER JOIN ${Tables.tb_category_lang} as cate_lang ON cate.id = cate_lang.id_category`;
   try {
     const result = await DBConnection.query(sql);
     return { data: result, state: true };

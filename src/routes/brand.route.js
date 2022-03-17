@@ -4,7 +4,7 @@ import awaitHandlerFactory from "@middleware/awaitHandlerFactory.middleware";
 
 const router = Router();
 
-router.post("/get", awaitHandlerFactory(brandController.getAll));
+router.get("/get", awaitHandlerFactory(brandController.getAll));
 router.post("/add", awaitHandlerFactory(brandController.add));
 router.post("/edit", awaitHandlerFactory(brandController.edit));
 router.post("/remove", awaitHandlerFactory(brandController.removeById));

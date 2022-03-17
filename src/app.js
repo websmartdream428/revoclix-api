@@ -10,6 +10,7 @@ import errorMiddleware from "@middleware/errorMiddleware";
 import authRouter from "@routes/auth.route";
 import categoryRouter from "@routes/category.route";
 import brandRouter from "@routes/brand.route";
+import languageRouter from "@routes/language.route";
 // ###
 // Init express
 const app = express();
@@ -28,6 +29,7 @@ app.options("*", cors());
 app.use("/auth", authRouter);
 app.use("/category", categoryRouter);
 app.use("/brand", brandRouter);
+app.use("/lang", languageRouter);
 
 app.all("*", (req, res, next) => {
   const error = new HttpException(404, "Endpoint Not Found.");

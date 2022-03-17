@@ -4,7 +4,7 @@ const LangModel = require("@models/language.model");
 const getAll = async (req, res) => {
   const result = await LangModel.getAllLanguage();
   if (result.state) {
-    res.json(result);
+    res.json({ type: "success", message: "success", data: result.data });
   } else {
     throw new HttpException(500, `Server Error!`);
   }
