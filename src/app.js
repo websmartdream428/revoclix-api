@@ -11,18 +11,22 @@ import authRouter from "@routes/auth.route";
 import categoryRouter from "@routes/category.route";
 import brandRouter from "@routes/brand.route";
 import languageRouter from "@routes/language.route";
+const fileUpload = require("express-fileupload");
 // ###
 // Init express
 const app = express();
 
 const dotenv = require("dotenv");
 dotenv.config();
+app.use(fileUpload());
+app.use(express.static("public"));
 // parse requests of content-type: application/json
 // parses incoming requests with JSON payloads
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // enabling cors for all requests by using cors middleware
 app.use(cors());
+app.use(express.json());
 // Enable pre-flight
 app.options("*", cors());
 
@@ -30,6 +34,7 @@ app.use("/auth", authRouter);
 app.use("/category", categoryRouter);
 app.use("/brand", brandRouter);
 app.use("/lang", languageRouter);
+app.use("/upload", express.static("upload"));
 
 app.all("*", (req, res, next) => {
   const error = new HttpException(404, "Endpoint Not Found.");

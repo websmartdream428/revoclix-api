@@ -13,44 +13,29 @@ const getAllLanguage = async () => {
 };
 
 const addLanguage = async (params) => {
-  const { name, active, iso_code } = params;
-  const sql = `INSERT INTO ${Tables.tb_brands} (name, active, iso_code, created_at, update_at, remove_on) VALUES (?,?,?,?,?,?)`;
+  const { name, flag, active, iso_code, date_format, date_format_full, code } =
+    params;
+  const sql = `INSERT INTO ${Tables.tb_lang} (flag, name, active, code, date_format, date_format_full, iso_code, created_at, update_at, remove_on) VALUES (?,?,?,?,?,?,?,now(),now(),now())`;
   try {
-    await DBConnection.query(sql, [
+    const result = await DBConnection.query(sql, [
+      flag,
       name,
       active,
+      code,
+      date_format,
+      date_format_full,
       iso_code,
-      Date.now(),
-      Date.now(),
-      Date.now(),
     ]);
-
-    //   const resData = {
-    //     id_parent,
-    //     iconFamily,
-    //     icon,
-    //     backgroundColor,
-    //     color,
-    //     active,
-    //     level_depth,
-    //     id_lang,
-    //     name,
-    //     description,
-    //     url_rewriting,
-    //     meta_title,
-    //     meta_keywords,
-    //     meta_description,
-    //   };
-    return true;
+    return { state: true, data: { ...params, id: result.insertId } };
   } catch (error) {
     console.log(error);
-    return false;
+    return { state: false, data: {} };
   }
 };
 
 const editLanguage = async (params) => {
   const { id, name, active, iso_code } = params;
-  const sql = `UPDATE ${Tables.tb_brands} SET name = ?, active = ?, iso_code = ?, update_at = ? WHERE id = ${id}`;
+  const sql = `UPDATE ${Tables.tb_lang} SET name = ?, active = ?, iso_code = ?, update_at = ? WHERE id = ${id}`;
   try {
     await DBConnection.query(sql, [name, active, iso_code, Date.now()]);
     return { state: true };
@@ -61,11 +46,9 @@ const editLanguage = async (params) => {
 };
 
 const removeLanguage = async (id) => {
-  const sql = `DELETE FROM ${Tables.tb_brands} WHERE id=${id};`;
-  const sql_lang = `DELETE FROM ${Tables.tb_brands_lang} WHERE id_brands=${id};`;
+  const sql = `DELETE FROM ${Tables.tb_lang} WHERE id=${id};`;
   try {
     await DBConnection.query(sql);
-    await DBConnection.query(sql_lang);
     return { state: true };
   } catch (error) {
     console.log(error);

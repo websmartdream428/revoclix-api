@@ -1,5 +1,7 @@
 const HttpException = require("@utils/HttpException.utils");
 const LangModel = require("@models/language.model");
+const { fileUpload } = require("@utils/fileupload.utils");
+const config = require("../../config");
 
 const getAll = async (req, res) => {
   const result = await LangModel.getAllLanguage();
@@ -11,11 +13,20 @@ const getAll = async (req, res) => {
 };
 
 const add = async (req, res) => {
-  const { body } = req;
-  const result = await LangModel.addLanguage(body);
-  if (result) {
-    res.json({ success: true });
-  } else {
+  try {
+    const filename = await fileUpload(req.files.file);
+    const { body } = req;
+    const newLanguage = {
+      ...body,
+      flag: config.base_url + filename,
+    };
+    const result = await LangModel.addLanguage(newLanguage);
+    if (result.state) {
+      res.json({ type: "success", message: "success", data: result.data });
+    } else {
+      throw new HttpException(500, `Server Error!`);
+    }
+  } catch (error) {
     throw new HttpException(500, `Server Error!`);
   }
 };
@@ -32,9 +43,9 @@ const edit = async (req, res) => {
 
 const removeById = async (req, res) => {
   const { language_id } = req.body;
-  const result = LangModel.removeLanguage(language_id);
+  const result = await LangModel.removeLanguage(language_id);
   if (result.state) {
-    res.json({ success: true });
+    res.json({ type: "success", message: "success" });
   } else {
     throw new HttpException(500, `Server Error!`);
   }
