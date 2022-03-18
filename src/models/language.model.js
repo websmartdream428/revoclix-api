@@ -34,14 +34,31 @@ const addLanguage = async (params) => {
 };
 
 const editLanguage = async (params) => {
-  const { id, name, active, iso_code } = params;
-  const sql = `UPDATE ${Tables.tb_lang} SET name = ?, active = ?, iso_code = ?, update_at = ? WHERE id = ${id}`;
+  const {
+    id,
+    name,
+    flag,
+    active,
+    iso_code,
+    date_format,
+    date_format_full,
+    code,
+  } = params;
+  const sql = `UPDATE ${Tables.tb_lang} SET name = ?, flag = ?, active = ?, iso_code = ?, code = ?, date_format = ?, date_format_full = ?, update_at = now() WHERE id = ${id}`;
   try {
-    await DBConnection.query(sql, [name, active, iso_code, Date.now()]);
-    return { state: true };
+    await DBConnection.query(sql, [
+      name,
+      flag,
+      active,
+      iso_code,
+      code,
+      date_format,
+      date_format_full,
+    ]);
+    return { state: true, data: { ...params } };
   } catch (error) {
     console.log(error);
-    return { state: false };
+    return { state: false, data: {} };
   }
 };
 

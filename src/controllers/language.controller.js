@@ -33,9 +33,18 @@ const add = async (req, res) => {
 
 const edit = async (req, res) => {
   const { body } = req;
-  const result = LangModel.editLanguage(body);
+  const newLanguage = {
+    ...body,
+  };
+  if (body.flag_updated) {
+    const filename = await fileUpload(req.files.file);
+    newLanguage.flag = config.base_url + filename;
+  } else {
+    newLanguage.flag = body.filePath;
+  }
+  const result = await LangModel.editLanguage(newLanguage);
   if (result.state) {
-    res.json({ success: true });
+    res.json({ type: "success", message: "success", data: result.data });
   } else {
     throw new HttpException(500, `Server Error!`);
   }
