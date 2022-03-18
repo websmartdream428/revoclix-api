@@ -34,7 +34,6 @@ const addBrand = async (params) => {
 };
 
 const editBrand = async (params) => {
-  console.log("model", params);
   const { id, name, logo, active, id_lang, meta_title, description } = params;
   const sql = `UPDATE ${Tables.tb_brands} SET name = ?, logo = ?, active = ?, update_at = now() WHERE id = ${id}`;
   const sql_lang = `UPDATE ${Tables.tb_brands_lang} SET id_lang = ?, meta_title = ?, description = ?, update_at = now() WHERE id_brands = ${id}`;
