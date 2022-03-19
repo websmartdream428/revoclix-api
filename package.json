@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "product": "npm run build && node ./build/app.js",
-    "start": "node --exec babel-node ./src/app.js",
-    "dev": "nodemon babel -d ./src/app.js",
+    "start": "npm run build && node ./build/app.js",
+    "dev": "nodemon --exec babel-node ./src/app.js",
     "build": "babel -d ./build ./src/app.js -s"
   },
   "keywords": [],
