@@ -4,3 +4,4 @@ package-lock.json
 .api.env
 .DS_Store
 build
+.env
