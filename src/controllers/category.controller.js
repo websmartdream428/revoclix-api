@@ -20,7 +20,6 @@ const add = async (req, res) => {
       ...body,
       icon: config.base_url + filename,
     };
-    console.log(newCategory);
 
     const result = await CategoryModel.addCategory(newCategory);
     if (result.state) {
