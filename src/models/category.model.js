@@ -50,10 +50,17 @@ const addCategory = async (params) => {
       description,
       url_rewriting,
       meta_title,
-      meta_keywords,
+      meta_keywords.toString(),
       meta_description,
     ]);
-    return { state: true, data: { ...params, id: result.insertId } };
+    return {
+      state: true,
+      data: {
+        ...params,
+        meta_keywords: meta_keywords.toString,
+        id: result.insertId,
+      },
+    };
   } catch (error) {
     console.log(error);
     return { state: false, data: {} };
@@ -96,10 +103,13 @@ const editCategory = async (params) => {
       description,
       url_rewriting,
       meta_title,
-      meta_keywords,
+      meta_keywords.toString(),
       meta_description,
     ]);
-    return { state: true, data: { ...params } };
+    return {
+      state: true,
+      data: { ...params, meta_keywords: meta_keywords.toString() },
+    };
   } catch (error) {
     console.log(error);
     return { state: false, data: {} };
