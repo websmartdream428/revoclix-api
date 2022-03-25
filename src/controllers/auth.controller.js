@@ -24,6 +24,9 @@ const adminLogin = async (req, res) => {
   res.json({ type: "success", message: "successfull", token });
 };
 
+const userRegister = async (req, res) => {};
+
 module.exports = {
   adminLogin,
+  userRegister,
 };
