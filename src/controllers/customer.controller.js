@@ -1,10 +1,8 @@
 const HttpException = require("@utils/HttpException.utils");
-const CategoryModel = require("../models/category.model");
-const { fileUpload } = require("@utils/fileupload.utils");
-const config = require("../../config");
+const CustomerModel = require("@models/customer.model");
 
-const getAll = async (req, res) => {
-  const result = await CategoryModel.getAllCategory();
+const getAll = async () => {
+  const result = await CustomerModel.getAllCustomer();
   if (result.state) {
     res.json(result);
   } else {
@@ -16,12 +14,12 @@ const add = async (req, res) => {
   try {
     const filename = await fileUpload(req.files.file);
     const { body } = req;
-    const newCategory = {
+    const newBrand = {
       ...body,
-      icon: config.base_url + filename,
+      logo: config.base_url + filename,
     };
 
-    const result = await CategoryModel.addCategory(newCategory);
+    const result = await BrandModel.addBrand(newBrand);
     if (result.state) {
       res.json({ type: "success", message: "success", data: result.data });
     } else {
@@ -34,16 +32,16 @@ const add = async (req, res) => {
 
 const edit = async (req, res) => {
   const { body } = req;
-  const newCategory = {
+  const newBrand = {
     ...body,
   };
   if (body.flag_updated) {
     const filename = await fileUpload(req.files.file);
-    newCategory.icon = config.base_url + filename;
+    newBrand.logo = config.base_url + filename;
   } else {
-    newCategory.icon = body.filePath;
+    newBrand.logo = body.filePath;
   }
-  const result = await CategoryModel.editCategory(newCategory);
+  const result = await BrandModel.editBrand(newBrand);
   if (result.state) {
     res.json({ type: "success", message: "success", data: result.data });
   } else {
@@ -52,8 +50,8 @@ const edit = async (req, res) => {
 };
 
 const removeById = async (req, res) => {
-  const { category_id } = req.body;
-  const result = await CategoryModel.removeCategory(category_id);
+  const { brand_id } = req.body;
+  const result = await BrandModel.removeBrand(brand_id);
   if (result.state) {
     res.json({ type: "success", message: "success" });
   } else {
@@ -61,9 +59,4 @@ const removeById = async (req, res) => {
   }
 };
 
-module.exports = {
-  getAll,
-  add,
-  edit,
-  removeById,
-};
+module.exports = { getAll, add, edit, removeById };
