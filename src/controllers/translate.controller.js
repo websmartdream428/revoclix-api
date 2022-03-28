@@ -2,7 +2,7 @@ const HttpException = require("@utils/HttpException.utils");
 const TranslateModel = require("@models/translate.model");
 
 const getAll = async (req, res) => {
-  const result = await CategoryModel.getAllCategory();
+  const result = await TranslateModel.getAllTranslate();
   if (result.state) {
     res.json(result);
   } else {

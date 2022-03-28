@@ -50,7 +50,7 @@ const addTranslate = async (params) => {
 
 const editTranslate = async (params) => {
   const { id, _key, id_translate, name } = params;
-  const sql = `UPDATE INTO ${Tables.tb_category} SET _key = ?, update_at = now() WHERE id = ${id} `;
+  const sql = `UPDATE INTO ${Tables.tb_translate} SET _key = ?, update_at = now() WHERE id = ${id} `;
   try {
     const result = await DBConnection.query(sql, [_key]);
 
@@ -89,10 +89,10 @@ const editTranslate = async (params) => {
 
 const removeTranslate = async (id) => {
   const sql = `DELETE FROM ${Tables.tb_translate} WHERE id=${id};`;
-  const sql_category = `DELETE FROM ${Tables.tb_translate_lang} WHERE id_translate=${id};`;
+  const sql_translate = `DELETE FROM ${Tables.tb_translate_lang} WHERE id_translate=${id};`;
   try {
     await DBConnection.query(sql);
-    await DBConnection.query(sql_category);
+    await DBConnection.query(sql_translate);
     return { state: true };
   } catch (error) {
     console.log(error);
