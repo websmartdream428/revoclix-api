@@ -32,7 +32,6 @@ const adminLogin = async (req, res) => {
 const userRegister = async (req, res) => {
   const { email, username, subscribe } = req.body;
   const password = await bcrypt.hash(req.body.password, 8);
-  console.log(subscribe);
   const result = await AuthModel.userRegister({
     email,
     password,
