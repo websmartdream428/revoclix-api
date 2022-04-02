@@ -15,7 +15,12 @@ const adminLogin = async (req, res) => {
     throw new HttpException(400, "Incorrect password");
   }
   const token = jwt.sign(
-    { user_id: admin.user.id.toString() },
+    {
+      id: admin.user.id.toString(),
+      username: admin.user.username,
+      email: admin.user.email,
+      subscribe: admin.user.subscribe,
+    },
     process.env.SECRET_JWT,
     {
       expiresIn: "365d",
@@ -25,14 +30,20 @@ const adminLogin = async (req, res) => {
 };
 
 const userRegister = async (req, res) => {
-  const { email } = req.body;
+  const { email, username, subscribe } = req.body;
   const password = await bcrypt.hash(req.body.password, 8);
-  const result = await AuthModel.userRegister({ email, password });
+  console.log(subscribe);
+  const result = await AuthModel.userRegister({
+    email,
+    password,
+    username,
+    subscribe,
+  });
 
   if (!result.state) {
     throw new HttpException(400, "This email already exist.");
   }
-  res.json({ type: "success", message: "successfull" });
+  res.json({ type: "success", message: "successfull", data: result.data });
 };
 
 const userLogin = async (req, res) => {

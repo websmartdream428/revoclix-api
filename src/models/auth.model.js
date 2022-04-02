@@ -20,25 +20,21 @@ const checkAdmin = async (params) => {
 };
 
 const userRegister = async (params) => {
-  const { email, password } = params;
-  const checkSql = `SELECT * FROM ${Tables.tb_users} WHERE email=?`;
-  const result = await DBConnection.query(checkSql, [email]);
+  const { username, email, password, subscribe } = params;
+  const checkSql = `SELECT * FROM ${Tables.tb_users} WHERE email=? OR username=?`;
+  const result = await DBConnection.query(checkSql, [email, username]);
   if (result.length === 0) {
-    const addSql = `INSERT INTO ${Tables.tb_users} (name, firstname, username, password, email, google_account, facebook_account, phone, cities_id, lvl) VALUES (?,?,?,?,?,?,?,?,?,?, now(),now(),now())`;
+    const addSql = `INSERT INTO ${Tables.tb_users} (username, password, email, subscribe, created_at, update_at, remove_on) VALUES (?,?,?,?, now(),now(),now())`;
     try {
-      await DBConnection.query(addSql, [
-        "Empty",
-        "Empty",
-        "Empty",
+      const insert_res = await DBConnection.query(addSql, [
+        username,
         password,
         email,
-        "Empty",
-        "Empty",
-        -1,
-        -1,
+        subscribe ? 1 : 0,
       ]);
       return {
         state: true,
+        data: { ...params, id: insert_res.insertId },
       };
     } catch (error) {
       console.log(error);
@@ -48,7 +44,7 @@ const userRegister = async (params) => {
     }
   }
   return {
-    state: true,
+    state: false,
   };
 };
 

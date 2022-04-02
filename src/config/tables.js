@@ -47,5 +47,6 @@ module.exports = {
   tb_translate_lang: "translate_lang",
   tb_type_sim: "type_sim",
   tb_users: "users",
+  tb_user_info: "user_info",
   tb_users_connections: "users_connections",
 };
