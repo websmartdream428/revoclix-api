@@ -56,7 +56,12 @@ const userLogin = async (req, res) => {
     throw new HttpException(400, "Incorrect Password.");
   }
   const token = jwt.sign(
-    { user_id: result.user.id.toString() },
+    {
+      id: result.user.id.toString(),
+      username: result.user.username,
+      email: result.user.email,
+      subscribe: result.user.subscribe,
+    },
     process.env.SECRET_JWT,
     {
       expiresIn: "365d",
