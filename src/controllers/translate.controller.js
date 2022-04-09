@@ -16,7 +16,7 @@ const add = async (req, res) => {
   if (result.state) {
     res.json({ type: "success", message: "success", data: result.data });
   } else {
-    throw new HttpException(500, `Server Error!`);
+    throw new HttpException(400, result.data);
   }
 };
 
@@ -31,8 +31,8 @@ const edit = async (req, res) => {
 };
 
 const removeById = async (req, res) => {
-  const { translate_id } = req.body;
-  const result = await TranslateModel.removeTranslate(translate_id);
+  const { id } = req.body;
+  const result = await TranslateModel.removeTranslate(id);
   if (result.state) {
     res.json({ type: "success", message: "success" });
   } else {
