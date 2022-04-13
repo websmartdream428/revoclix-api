@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS lang
     name VARCHAR(32),
     code VARCHAR(50),
     active BOOLEAN DEFAULT FALSE,
+    t_active BOOLEAN DEFAULT FALSE,
     iso_code CHAR(2),
     date_format VARCHAR(20),
     date_format_full VARCHAR(20),

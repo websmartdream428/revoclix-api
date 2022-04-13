@@ -13,14 +13,23 @@ const getAllLanguage = async () => {
 };
 
 const addLanguage = async (params) => {
-  const { name, flag, active, iso_code, date_format, date_format_full, code } =
-    params;
-  const sql = `INSERT INTO ${Tables.tb_lang} (flag, name, active, code, date_format, date_format_full, iso_code, created_at, update_at, remove_on) VALUES (?,?,?,?,?,?,?,now(),now(),now())`;
+  const {
+    name,
+    flag,
+    active,
+    t_active,
+    iso_code,
+    date_format,
+    date_format_full,
+    code,
+  } = params;
+  const sql = `INSERT INTO ${Tables.tb_lang} (flag, name, active, t_active, code, date_format, date_format_full, iso_code, created_at, update_at, remove_on) VALUES (?,?,?,?,?,?,?,?,now(),now(),now())`;
   try {
     const result = await DBConnection.query(sql, [
       flag,
       name,
       active,
+      t_active,
       code,
       date_format,
       date_format_full,
@@ -39,17 +48,19 @@ const editLanguage = async (params) => {
     name,
     flag,
     active,
+    t_active,
     iso_code,
     date_format,
     date_format_full,
     code,
   } = params;
-  const sql = `UPDATE ${Tables.tb_lang} SET name = ?, flag = ?, active = ?, iso_code = ?, code = ?, date_format = ?, date_format_full = ?, update_at = now() WHERE id = ${id}`;
+  const sql = `UPDATE ${Tables.tb_lang} SET name = ?, flag = ?, active = ?, t_active = ?, iso_code = ?, code = ?, date_format = ?, date_format_full = ?, update_at = now() WHERE id = ${id}`;
   try {
     await DBConnection.query(sql, [
       name,
       flag,
       active,
+      t_active,
       iso_code,
       code,
       date_format,

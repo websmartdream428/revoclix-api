@@ -68,26 +68,25 @@ const addCategory = async (params) => {
 };
 
 const editCategory = async (params) => {
-  const {
-    id,
-    id_parent,
-    iconFamily,
-    icon,
-    backgroundColor,
-    color,
-    active,
-    level_depth,
-    id_lang,
-    name,
-    description,
-    url_rewriting,
-    meta_title,
-    meta_keywords,
-    meta_description,
-  } = params;
-  const sql = `UPDATE ${Tables.tb_category} SET id_parent = ?, iconFamily = ?, icon = ?, backgroundColor = ?, color = ?, active = ?, level_depth = ?, update_at = now() WHERE id = ${id}`;
-  const sql_category = `UPDATE ${Tables.tb_category_lang} SET id_lang = ?, name = ?, description = ?, url_rewriting = ?, meta_title = ?, meta_keywords = ?, meta_description = ?, update_at = now() WHERE id_category = ${id}`;
   try {
+    const {
+      id,
+      id_parent,
+      iconFamily,
+      icon,
+      backgroundColor,
+      color,
+      active,
+      level_depth,
+      id_lang,
+      name,
+      description,
+      url_rewriting,
+      meta_title,
+      meta_keywords,
+      meta_description,
+    } = params;
+    const sql = `UPDATE ${Tables.tb_category} SET id_parent = ?, iconFamily = ?, icon = ?, backgroundColor = ?, color = ?, active = ?, level_depth = ?, update_at = now() WHERE id = ${id}`;
     await DBConnection.query(sql, [
       id_parent,
       iconFamily,
@@ -97,18 +96,48 @@ const editCategory = async (params) => {
       active,
       level_depth,
     ]);
-    await DBConnection.query(sql_category, [
-      id_lang,
-      name,
-      description,
-      url_rewriting,
-      meta_title,
-      meta_keywords.toString(),
-      meta_description,
-    ]);
+
+    const check_lang_sql = `SELECT * FROM ${Tables.tb_category_lang} WHERE id_lang=? AND id_category=?`;
+    const result = await DBConnection.query(check_lang_sql, [id_lang, id]);
+    if (result.length > 0) {
+      const sql_category = `UPDATE ${Tables.tb_category_lang} SET id_lang = ?, name = ?, description = ?, url_rewriting = ?, meta_title = ?, meta_keywords = ?, meta_description = ?, update_at = now() WHERE id_category = ${id} AND id_lang = ${id_lang}`;
+      await DBConnection.query(sql_category, [
+        id_lang,
+        name,
+        description,
+        url_rewriting,
+        meta_title,
+        meta_keywords.toString(),
+        meta_description,
+      ]);
+    } else {
+      console.log(
+        id,
+        id_lang,
+        name,
+        description,
+        url_rewriting,
+        meta_title,
+        meta_keywords.toString(),
+        meta_description
+      );
+      const sql_category = `INSERT INTO ${Tables.tb_category_lang} (id_category, id_lang, name, description, url_rewriting, meta_title, meta_keywords, meta_description, created_at, update_at, remove_on) VALUES (?,?,?,?,?,?,?,?,now(),now(),now())`;
+      await DBConnection.query(sql_category, [
+        id,
+        id_lang,
+        name,
+        description,
+        url_rewriting,
+        meta_title,
+        meta_keywords.toString(),
+        meta_description,
+      ]);
+    }
+    const result_sql = `SELECT * FROM ${Tables.tb_category} as cate INNER JOIN ${Tables.tb_category_lang} as cate_lang ON cate.id = cate_lang.id_category WHERE cate_lang.id_category = ${id} AND cate_lang.id_lang = ${id_lang}`;
+    const _result = await DBConnection.query(result_sql);
     return {
       state: true,
-      data: { ...params, meta_keywords: meta_keywords.toString() },
+      data: _result[0],
     };
   } catch (error) {
     console.log(error);

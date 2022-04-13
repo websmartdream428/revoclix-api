@@ -14,11 +14,11 @@ const getAll = async (req, res) => {
 
 const add = async (req, res) => {
   try {
-    const filename = await fileUpload(req.files.file);
+    // const filename = await fileUpload(req.files.file);
     const { body } = req;
     const newCategory = {
       ...body,
-      icon: config.base_url + filename,
+      // icon: config.base_url + filename,
     };
 
     const result = await CategoryModel.addCategory(newCategory);
@@ -37,12 +37,12 @@ const edit = async (req, res) => {
   const newCategory = {
     ...body,
   };
-  if (body.flag_updated) {
-    const filename = await fileUpload(req.files.file);
-    newCategory.icon = config.base_url + filename;
-  } else {
-    newCategory.icon = body.filePath;
-  }
+  // if (body.flag_updated) {
+  //   const filename = await fileUpload(req.files.file);
+  //   newCategory.icon = config.base_url + filename;
+  // } else {
+  //   newCategory.icon = body.filePath;
+  // }
   const result = await CategoryModel.editCategory(newCategory);
   if (result.state) {
     res.json({ type: "success", message: "success", data: result.data });

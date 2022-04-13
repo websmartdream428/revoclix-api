@@ -6,6 +6,7 @@ module.exports = {
       name VARCHAR(32),
       code VARCHAR(50),
       active BOOLEAN DEFAULT FALSE,
+      t_active BOOLEAN DEFAULT FALSE,
       iso_code CHAR(10),
       date_format VARCHAR(20),
       date_format_full VARCHAR(20),
