@@ -36,7 +36,7 @@ const removeById = async (req, res) => {
   if (result.state) {
     res.json({ type: "success", message: "success" });
   } else {
-    throw new HttpException(500, `Server Error!`);
+    throw HttpException(500, `Server Error!`);
   }
 };
 

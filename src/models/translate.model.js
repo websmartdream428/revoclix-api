@@ -59,12 +59,22 @@ const editTranslate = async (params) => {
     let setSQL = "",
       whereSQL = "";
     for (let i = 0; i < langData.length; i++) {
-      setSQL += `when id_lang = ${langData[i].lang} then "${langData[i].text}" `;
-      whereSQL += `${langData[i].lang}`;
-      if (langData.length - 1 === i) {
-        whereSQL += "";
-      } else {
+      const check_sql = `SELECT * FROM ${Tables.tb_translate_lang} WHERE id_translate=${id} AND id_lang=${langData[i].lang}`;
+      const check_res = await DBConnection.query(check_sql);
+      if (check_res.length > 0) {
+        setSQL += `when id_lang = ${langData[i].lang} then "${langData[i].text}" `;
+        whereSQL += `${langData[i].lang}`;
         whereSQL += ",";
+      } else {
+        const add_sql = `
+        INSERT INTO ${Tables.tb_translate_lang}
+            (id_translate, id_lang, name, created_at, update_at, remove_on)
+        VALUES (?,?,?,now(),now(),now())`;
+        await DBConnection.query(add_sql, [
+          id,
+          langData[i].lang,
+          langData[i].text,
+        ]);
       }
     }
 
@@ -72,7 +82,10 @@ const editTranslate = async (params) => {
         UPDATE ${Tables.tb_translate_lang}
             SET name = (case ${setSQL} end),
                 update_at = now()
-            WHERE id_lang in (${whereSQL}) AND id_translate = ${id};`;
+            WHERE id_lang in (${whereSQL.slice(
+              0,
+              whereSQL.length - 1
+            )}) AND id_translate = ${id};`;
 
     await DBConnection.query(sql_translate, []);
     const select_sql = `SELECT * FROM ${Tables.tb_translate} as trans INNER JOIN ${Tables.tb_translate_lang} as trans_lang ON trans.id = trans_lang.id_translate`;
