@@ -12,6 +12,7 @@ import categoryRouter from "@routes/category.route";
 import brandRouter from "@routes/brand.route";
 import languageRouter from "@routes/language.route";
 import translateRouter from "@routes/translate.route";
+import conditionRouter from "@routes/condition.route";
 const fileUpload = require("express-fileupload");
 // ###
 // Init express
@@ -36,6 +37,7 @@ app.use("/category", categoryRouter);
 app.use("/brand", brandRouter);
 app.use("/lang", languageRouter);
 app.use("/translate", translateRouter);
+app.use("/condition", conditionRouter);
 app.use("/upload", express.static("upload"));
 
 app.all("*", (req, res, next) => {
