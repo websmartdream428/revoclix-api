@@ -7,6 +7,7 @@ module.exports = {
         id_brand INT(10) NOT NULL,
         id_status INT(10) NOT NULL,
         id_color INT(10),
+        id_user INT(10),
         price DECIMAL(13,6) NOT NULL,
         reference VARCHAR(32),
         active BOOLEAN DEFAULT FALSE,
